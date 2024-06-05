@@ -1,7 +1,7 @@
-# Outage
+Predictive Analysis of Power Outages Using Machine Learningz
 
 ---
-title: Power Outages Project
+title: Predictive Analysis of Power Outages Using Machine Learning
 ---
 
 # Power Outages Project
