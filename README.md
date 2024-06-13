@@ -224,3 +224,111 @@ These features are chosen based on their relevance and availability prior to the
 #### Model 1: Identifying Leading Indicators
 
 #### Model 2: Building an Early Warning System
+
+---
+
+## Step 6: Baseline Model
+
+### Model 1: Predicting the Likelihood of Power Outages
+
+**Objective:** Predict whether a power outage will occur within a given timeframe.
+
+**Technique:** Supervised learning using logistic regression.
+
+**Data Preparation:**
+- Features: YEAR, CLIMATE.CATEGORY, POPDEN_URBAN, RES.PRICE
+- Target Variable: Binary (OUTAGE_OCCURRED)
+- Steps:
+  1. Extract the year from the OUTAGE.START column.
+  2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
+  3. Create a binary target variable (OUTAGE_OCCURRED).
+
+**Data Balancing:**
+- Upsample the minority class to balance the dataset.
+
+**Preprocessing:**
+- Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE).
+- One-hot encode categorical features (CLIMATE.CATEGORY).
+
+**Pipeline Creation:**
+- Combine preprocessing steps and logistic regression into a single pipeline.
+
+**Model Training and Evaluation:**
+- Split the data into training and testing sets.
+- Train the baseline model.
+- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, accuracy_score, roc_auc_score
+from sklearn.utils import resample
+
+# Load your dataset
+# Assuming df is your DataFrame
+df['YEAR'] = pd.to_datetime(df['OUTAGE.START']).dt.year
+
+# Select relevant features and target
+features = ['YEAR', 'CLIMATE.CATEGORY', 'POPDEN_URBAN', 'RES.PRICE']
+df = df.dropna(subset=features + ['OUTAGE.DURATION'])
+df['OUTAGE_OCCURRED'] = df['OUTAGE.DURATION'].apply(lambda x: 1 if x > 0 else 0)  # Binary target variable
+
+# Balancing the dataset
+df_majority = df[df.OUTAGE_OCCURRED == 1]
+df_minority = df[df.OUTAGE_OCCURRED == 0]
+
+df_minority_upsampled = resample(df_minority, 
+                                 replace=True,     # sample with replacement
+                                 n_samples=len(df_majority),    # to match majority class
+                                 random_state=42) # reproducible results
+
+df_balanced = pd.concat([df_majority, df_minority_upsampled])
+
+X = df_balanced[features]
+y = df_balanced['OUTAGE_OCCURRED']
+
+# Define preprocessing for numerical and categorical features
+numerical_features = ['YEAR', 'POPDEN_URBAN', 'RES.PRICE']
+categorical_features = ['CLIMATE.CATEGORY']
+
+numerical_transformer = StandardScaler()
+categorical_transformer = OneHotEncoder(handle_unknown='ignore')
+
+# Create preprocessing pipelines
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numerical_transformer, numerical_features),
+        ('cat', categorical_transformer, categorical_features)
+    ])
+
+# Create the pipeline
+pipeline = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('classifier', LogisticRegression(random_state=42))
+])
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the baseline model
+pipeline.fit(X_train, y_train)
+
+# Make predictions
+y_pred = pipeline.predict(X_test)
+y_pred_prob = pipeline.predict_proba(X_test)[:, 1]
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred_prob)
+report = classification_report(y_test, y_pred, zero_division=0)
+
+# Print evaluation results
+print("Baseline Model Evaluation:")
+print(f"Accuracy: {accuracy}")
+print(f"ROC-AUC Score: {roc_auc}")
+print("Classification Report:")
+print(report)
