@@ -127,3 +127,42 @@ To analyze trends over time, we looked at how outage durations have changed over
 
 These analyses provide a comprehensive understanding of the data and lay the groundwork for developing an early warning system for power outages.
 
+---
+
+# Interesting Aggregates
+
+## Grouped and Pivot Tables
+
+### Aggregate Statistics by Climate Category
+
+In this section, we group the data by climate category and compute aggregate statistics for outage duration, customers affected, and demand loss. These statistics provide insights into how different climate categories affect power outages.
+
+![Aggregate Statistics by Climate Category](aggregate_climate_category.png)
+
+### Aggregate Statistics by Year
+
+We also group the data by year to observe trends and changes over time in outage duration, customers affected, and demand loss. This helps us understand how power outage characteristics have evolved.
+
+![Aggregate Statistics by Year](aggregate_year.png)
+
+### Aggregate Statistics by State
+
+Grouping the data by state allows us to see the variations in outage duration, customers affected, and demand loss across different states. This analysis is crucial for understanding regional differences.
+
+![Aggregate Statistics by State](aggregate_state.png)
+
+### Pivot Table: Mean Outage Duration by Climate Category and Year
+
+This pivot table shows the mean outage duration grouped by climate category and year. It helps us understand how climate conditions and time periods affect the duration of power outages.
+
+![Pivot Table: Mean Outage Duration by Climate Category and Year](pivot_climate_year.png)
+
+### Pivot Table: Mean Customers Affected by State and Year
+
+This pivot table displays the mean number of customers affected by state and year. It provides insights into the impact of power outages on different states over time.
+
+![Pivot Table: Mean Customers Affected by State and Year](pivot_state_year.png)
+
+These tables and pivot tables offer valuable aggregate statistics and trends that enhance our understanding of power outages. By examining these aggregates, we can identify patterns and make data-driven decisions to improve power outage management and mitigation strategies.
+
+
