@@ -41,4 +41,89 @@ The dataset contains a total of 1540 rows and 57 columns, providing a comprehens
 
 ---
 
+## Data Cleaning and Exploratory Data Analysis
+
+### Data Cleaning
+
+In our data cleaning process, we performed the following steps:
+
+1. **Removed Metadata**: The first four rows were metadata, so they were removed.
+2. **Set Column Names**: The fifth row was used as the header for column names.
+3. **Removed Empty Columns and Rows**: Columns and rows with all NaN values were dropped.
+4. **Converted Data Types**: Appropriate columns were converted to numeric types.
+5. **Handled Missing Values**: Replaced placeholders with NaN and dropped rows with significant missing values.
+6. **Date and Time Processing**: Combined date and time columns to create datetime columns for OUTAGE.START and OUTAGE.END.
+7. **Scaled Numerical Data**: Scaled numerical columns like demand loss and prices for analysis.
+
+These steps ensured the dataset was clean and ready for analysis. Below is the head of the cleaned DataFrame:
+
+---
+
+### Uni/Bi-Variate Analysis
+
+## Univariate Analysis
+
+In our univariate analysis, we explored the distributions of several key columns from the Power Outages dataset. These distributions provide insights into the variability and characteristics of the data.
+
+### Distribution of Outage Duration
+
+We analyzed the distribution of outage durations to understand the range and frequency of different outage lengths.
+
+![Distribution of Outage Duration](outage_duration.png)
+
+**Explanation**: The distribution of outage durations shows high variability and significant outliers. While most outages are relatively short, there are some extreme cases with very long durations.
+
+### Distribution of Customers Affected
+
+We examined how many customers were affected by the outages to identify the scale and impact of different events.
+
+![Distribution of Customers Affected](customers_affected.png)
+
+**Explanation**: The distribution indicates that while many outages affect a smaller number of customers, there are instances where a large number of customers are impacted, highlighting the importance of understanding and mitigating large-scale outages.
+
+### Distribution of Demand Loss
+
+Understanding the distribution of demand loss helps to see how power demand is affected during outages.
+
+![Distribution of Demand Loss](demand_loss.png)
+
+**Explanation**: The demand loss data is mostly centered around zero, with a wide range of both positive and negative values, indicating that some outages result in substantial demand loss while others do not.
+
+## Bivariate Analysis
+
+In our bivariate analysis, we explored the relationships between pairs of columns to identify possible associations and trends.
+
+### Outage Duration vs. Customers Affected
+
+We plotted outage duration against the number of customers affected to see if there is a relationship between the two.
+
+![Outage Duration vs. Customers Affected](outage_duration_vs_customers_affected.png)
+
+**Explanation**: The scatter plot reveals a weak positive correlation (0.26) between outage duration and the number of customers affected, indicating that longer outages tend to affect more customers, but other factors also play significant roles.
+
+### Outage Duration by Climate Category
+
+We analyzed how different climate conditions impact the duration of power outages.
+
+![Outage Duration by Climate Category](outage_duration_by_climate_category.png)
+
+**Explanation**: The box plot shows that warm climates have the highest mean outage duration, but cold climates have the most variability and longest maximum outage durations. This indicates that climate plays a significant role in the duration of outages.
+
+### Customers Affected vs. Demand Loss
+
+We explored the relationship between the number of customers affected and the demand loss to highlight potential indicators of large-scale outages.
+
+![Customers Affected vs. Demand Loss](customers_affected_vs_demand_loss.png)
+
+**Explanation**: The scatter plot shows a moderate positive relationship (0.52) between customers affected and demand loss, highlighting demand loss as a significant indicator of large-scale outages.
+
+### Outage Duration vs. Year
+
+To analyze trends over time, we looked at how outage durations have changed over the years.
+
+![Outage Duration vs. Year](outage_duration_vs_year.png)
+
+**Explanation**: The scatter plot suggests a slight negative trend in outage duration over the years, indicating improvements in outage management and infrastructure over time.
+
+These analyses provide a comprehensive understanding of the data and lay the groundwork for developing an early warning system for power outages.
 
