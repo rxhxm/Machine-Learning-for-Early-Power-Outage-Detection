@@ -168,120 +168,59 @@ These tables and pivot tables offer valuable aggregate statistics and trends tha
 
 ---
 
-# Hypothesis Testing
+## Framing a Prediction Problem
 
-## Hypothesis 1: Impact of Climate Category on Outage Duration
+### Step 1: Problem Identification
 
-### Null Hypothesis (H0)
-There is no difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY.
+**Primary Question:** What are the leading indicators of power outages, and can we build an early warning system to detect potential outages?
 
-### Alternative Hypothesis (H1)
-There is a difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY.
+**Importance of the Question:**
+- **Preparedness and Response:** Helps utility companies and emergency services prepare for and respond more effectively to impending outages.
+- **Practical Impact:** An early warning system has immediate practical applications, providing significant value to stakeholders by potentially preventing outages or mitigating their impact.
 
-### Test Selection
-We use ANOVA (Analysis of Variance) to compare the means of OUTAGE.DURATION across multiple groups (CLIMATE.CATEGORY).
+### Machine Learning Techniques and Approach
 
-### Results
-After performing ANOVA, we found a significant difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY.
+#### Model 1: Identifying Leading Indicators of Power Outages
 
-**Conclusion**: The analysis suggests that the climate category significantly impacts the duration of power outages.
+**Objective:** Determine which features in the dataset are strong predictors of power outages.
 
-## Hypothesis 2: Temporal Trends in Power Outage Frequency
+**Technique:** Use supervised learning (e.g., logistic regression, decision trees) to identify significant features.
 
-### Question
-Has the frequency of power outages increased over the years?
+**Data:** Features such as weather conditions, time of year, population density, and previous outage history.
 
-### Null Hypothesis (H0)
-The frequency of power outages has remained constant over the years.
+#### Model 2: Building an Early Warning System
 
-### Alternative Hypothesis (H1)
-The frequency of power outages has increased over the years.
+**Objective:** Predict the likelihood of a power outage occurring within a given timeframe.
 
-### Test Statistic
-Linear Regression Slope
+**Technique:** Use supervised learning (e.g., random forest, gradient boosting) to build a prediction model based on the identified indicators.
 
-### Results
-After conducting a linear regression analysis, the slope of the regression line was found to be positive with a p-value of 0.00657. Since the p-value is less than the significance level of 0.05, we reject the null hypothesis. This suggests that the frequency of power outages has indeed increased over the years.
+**Data:** Use the features identified in Model 1 to train the model.
 
-**Conclusion**: The analysis indicates a significant upward trend in the frequency of power outages over time, suggesting that power outages have become more common in recent years.
+### Prediction Problem Type and Details
 
-## Detailed Analysis
+**Prediction Problem Type:** Classification
 
-### Data Preparation
+**Type of Classification:** Binary classification (predicting whether a power outage will occur or not).
 
-python
-# Assuming df is your DataFrame
-df['YEAR'] = pd.to_datetime(df['OUTAGE.START']).dt.year
+**Response Variable:** The variable we are predicting is `OUTAGE_OCCURRENCE`, a binary variable indicating whether a power outage occurs within a given timeframe.
 
-# Aggregate the data to calculate the number of outages per year
-outage_counts = df.groupby('YEAR').size().reset_index(name='OUTAGE_COUNT')
+**Chosen Metric:** F1-Score
 
-import statsmodels.api as sm
+**Justification for Metric Choice:** 
+- **F1-Score** is chosen over accuracy because it provides a better balance between precision and recall, which is crucial in the context of predicting outages where both false positives (unnecessary alerts) and false negatives (missed outages) can have significant consequences.
+  
+### Information Known at the Time of Prediction
 
-X = outage_counts['YEAR']
-y = outage_counts['OUTAGE_COUNT']
-X = sm.add_constant(X)  # Adds a constant term to the predictor
+When predicting power outages, we ensure that the model only uses features that would be known before the outage occurs. This includes:
+- Historical weather conditions
+- Time of year
+- Population density
+- Previous outage history
 
-model = sm.OLS(y, X).fit()
-slope = model.params['YEAR']
-p_value = model.pvalues['YEAR']
-model_summary = model.summary()
+These features are chosen based on their relevance and availability prior to the occurrence of an outage.
 
-# Interpretation
-if p_value < 0.05:
-    print(f"Reject the null hypothesis. The frequency of power outages has increased over the years (slope: {slope}, p-value: {p_value}).")
-else:
-    print(f"Fail to reject the null hypothesis. There is no significant change in the frequency of power outages over the years (slope: {slope}, p-value: {p_value}).")
+### Implementation
 
-# Plotting the results
-import matplotlib.pyplot as plt
+#### Model 1: Identifying Leading Indicators
 
-plt.figure(figsize=(10, 6))
-plt.scatter(outage_counts['YEAR'], outage_counts['OUTAGE_COUNT'], label='Observed Data')
-plt.plot(outage_counts['YEAR'], model.fittedvalues, color='red', label='Fitted Line')
-plt.xlabel('Year')
-plt.ylabel('Number of Outages')
-plt.title('Temporal Trends in Power Outage Frequency')
-plt.legend()
-plt.show()
-
-# Print detailed model summary for interpretation
-print(model_summary)
-
-## Model Summary
-
-Reject the null hypothesis. The frequency of power outages has increased over the years (slope: 8.125000000000263, p-value: 0.006572971884367186).
-
-
-/Users/ronin/miniforge3/envs/dsc80/lib/python3.8/site-packages/scipy/stats/_stats_py.py:1736: UserWarning:
-kurtosistest only valid for n>=20 ... continuing anyway, n=17
-
-                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:           OUTAGE_COUNT   R-squared:                       0.399
-Model:                            OLS   Adj. R-squared:                  0.358
-Method:                 Least Squares   F-statistic:                     9.938
-Date:                Thu, 13 Jun 2024   Prob (F-statistic):            0.00657
-Time:                        15:12:52   Log-Likelihood:                -90.249
-No. Observations:                  17   AIC:                             184.5
-Df Residuals:                      15   BIC:                             186.2
-Df Model:                           1                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P>|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-const      -1.623e+04   5175.311     -3.135      0.007   -2.73e+04   -5194.381
-YEAR           8.1250      2.577      3.152      0.007       2.632      13.618
-==============================================================================
-Omnibus:                       16.037   Durbin-Watson:                   1.198
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               16.816
-Skew:                           1.467   Prob(JB):                     0.000223
-Kurtosis:                       6.889   Cond. No.                     8.23e+05
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 8.23e+05. This might indicate that there are
-strong multicollinearity or other numerical problems.
-
-
+#### Model 2: Building an Early Warning System
