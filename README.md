@@ -245,13 +245,7 @@ Conclusion: The analysis indicates a significant upward trend in the frequency o
 
 ## Framing a Prediction Problem
 
-### Step 1: Problem Identification
-
 **Primary Question:** What are the leading indicators of power outages, and can we build an early warning system to detect potential outages?
-
-**Importance of the Question:**
-- **Preparedness and Response:** Helps utility companies and emergency services prepare for and respond more effectively to impending outages.
-- **Practical Impact:** An early warning system has immediate practical applications, providing significant value to stakeholders by potentially preventing outages or mitigating their impact.
 
 ### Machine Learning Techniques and Approach
 
@@ -271,34 +265,13 @@ Conclusion: The analysis indicates a significant upward trend in the frequency o
 
 **Data:** Use the features identified in Model 1 to train the model.
 
-### Prediction Problem Type and Details
-
-**Prediction Problem Type:** Classification
-
 **Type of Classification:** Binary classification (predicting whether a power outage will occur or not).
 
 **Response Variable:** The variable we are predicting is `OUTAGE_OCCURRENCE`, a binary variable indicating whether a power outage occurs within a given timeframe.
 
 **Chosen Metric:** F1-Score
-
-**Justification for Metric Choice:** 
 - **F1-Score** is chosen over accuracy because it provides a better balance between precision and recall, which is crucial in the context of predicting outages where both false positives (unnecessary alerts) and false negatives (missed outages) can have significant consequences.
-  
-### Information Known at the Time of Prediction
 
-When predicting power outages, we ensure that the model only uses features that would be known before the outage occurs. This includes:
-- Historical weather conditions
-- Time of year
-- Population density
-- Previous outage history
-
-These features are chosen based on their relevance and availability prior to the occurrence of an outage.
-
-### Implementation
-
-#### Model 1: Identifying Leading Indicators
-
-#### Model 2: Building an Early Warning System
 
 ---
 
