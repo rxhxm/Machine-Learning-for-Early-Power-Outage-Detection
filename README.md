@@ -2,11 +2,7 @@
 
 ## Introduction
 
-Welcome to the Power Outages Project! This website provides an overview of our project, aiming to make the findings accessible to a broad audience, including classmates, friends, family, recruiters, and random internet strangers. Here, we present the key elements of our analysis, focusing on understanding the leading indicators of power outages and exploring the potential to develop an early warning system.
-
-## Understanding the Data
-
-The dataset used for this project is the Power Outages dataset, which contains detailed information about various power outage events. Below are the key columns that are relevant to our analysis:
+Welcome to the Power Outages Project! This website provides an overview of our project, aiming to make the findings accessible to a broad audience, including classmates, friends, family, recruiters, and random internet strangers. Here, we present the key elements of our analysis, focusing on understanding the leading indicators of power outages and exploring the potential to develop an early warning system. The dataset used for this project is the Power Outages dataset, which contains detailed information about various power outage events.
 
 ## Project Question
 
