@@ -334,17 +334,10 @@ These features are chosen based on their relevance and availability prior to the
 **Data Balancing:**
 - Upsample the minority class to balance the dataset.
 
-**Preprocessing:**
+**Preprocessing and Pipeline Creatio:**
 - Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE).
 - One-hot encode categorical features (CLIMATE.CATEGORY).
-
-**Pipeline Creation:**
 - Combine preprocessing steps and logistic regression into a single pipeline.
-
-**Model Training and Evaluation:**
-- Split the data into training and testing sets.
-- Train the baseline model.
-- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
 
 **Performance:**
 - Accuracy: 0.71
@@ -356,7 +349,7 @@ These features are chosen based on their relevance and availability prior to the
        0       0.66      0.81      0.73       267
        1       0.78      0.61      0.68       288
 
-accuracy                           0.71       555
+accuracy                           0.71      
 
 **Summary:** The baseline model using logistic regression performs reasonably well with an accuracy of 0.71 and a ROC-AUC score of 0.75. This is a good starting point for further model enhancements.
 
@@ -382,19 +375,10 @@ accuracy                           0.71       555
 2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
 3. Create a binary target variable (OUTAGE_OCCURRED).
 
-**Data Balancing:**
-- Upsample the minority class to balance the dataset.
-
-**Preprocessing:**
+**Preprocessing and Pipeline Creation:**
 - Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE).
 - One-hot encode categorical features (CLIMATE.CATEGORY).
-
-**Pipeline Creation:**
 - Combine preprocessing steps and Random Forest Classifier into a single pipeline.
-
-**Model Training and Evaluation:**
-- Split the data into training and testing sets.
-- Train the model and evaluate using accuracy, ROC-AUC score, and a classification report.
 
 **Performance:**
 - Accuracy: 0.96
@@ -406,7 +390,7 @@ accuracy                           0.71       555
        0       0.93      1.00      0.96       267
        1       1.00      0.93      0.96       288
 
-accuracy                           0.96       555
+accuracy                           0.96      
 
 
 **Summary:** The baseline model using a RandomForestClassifier for building an early warning system for power outages performs very well, with high accuracy, ROC-AUC score, and balanced precision, recall, and F1-scores. The model effectively predicts the likelihood of power outages using the selected features, making it a strong starting point for further enhancements and more complex models.
@@ -440,11 +424,6 @@ accuracy                           0.96       555
   - C: Inverse of regularization strength.
   - Penalty: Specify the norm used in penalization (l1, l2).
 
-**Best Hyperparameters:**
-- C: 100
-- Penalty: l1
-- Solver: liblinear
-
 **Data Preparation:**
 - Target Variable: Binary (OUTAGE_OCCURRED)
 - Steps:
@@ -452,20 +431,10 @@ accuracy                           0.96       555
   2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
   3. Create a binary target variable (OUTAGE_OCCURRED).
 
-**Data Balancing:**
-- Upsample the minority class to balance the dataset.
-
-**Preprocessing:**
+**Preprocessing and Pipeline Creation**
 - Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE, YEAR_POPDEN_INTERACTION, LOG_RES_PRICE).
 - One-hot encode categorical features (CLIMATE.CATEGORY).
-
-**Pipeline Creation:**
 - Combine preprocessing steps and logistic regression into a single pipeline.
-
-**Model Training and Evaluation:**
-- Split the data into training and testing sets.
-- Train the model with best hyperparameters.
-- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
 
 **Performance:**
 - Accuracy: 0.71
@@ -509,12 +478,6 @@ accuracy                           0.71       555
 - min_samples_split: Minimum number of samples required to split an internal node.
 - min_samples_leaf: Minimum number of samples required to be at a leaf node.
 
-**Best Hyperparameters:**
-- n_estimators: 200
-- max_depth: 10
-- min_samples_split: 2
-- min_samples_leaf: 1
-
 **Data Preparation:**
 - Target Variable: Binary (OUTAGE_OCCURRED)
 - Steps:
@@ -522,32 +485,22 @@ accuracy                           0.71       555
 2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
 3. Create a binary target variable (OUTAGE_OCCURRED).
 
-**Data Balancing:**
-- Upsample the minority class to balance the dataset.
-
-**Preprocessing:**
+**Preprocessing and Pipeline Creation**
 - Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE, YEAR_POPDEN_INTERACTION, LOG_RES_PRICE).
 - One-hot encode categorical features (CLIMATE.CATEGORY).
-
-**Pipeline Creation:**
 - Combine preprocessing steps and Random Forest Classifier into a single pipeline.
-
-**Model Training and Evaluation:**
-- Split the data into training and testing sets.
-- Train the model with best hyperparameters.
-- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
 
 **Performance:**
 - Accuracy: 0.93
 - ROC-AUC Score: 0.98
 - Classification Report:
 
--           precision    recall  f1-score   support
+           precision    recall  f1-score   support
 
        0       0.87      1.00      0.93       267
        1       1.00      0.86      0.92       288
 
-accuracy                           0.93       555
+accuracy                           0.93
 
 
 
