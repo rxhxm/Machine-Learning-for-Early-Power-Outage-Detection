@@ -102,14 +102,6 @@ We explored the relationship between the number of customers affected and the de
 
 **Explanation**: The scatter plot shows a moderate positive relationship (0.52) between customers affected and demand loss, highlighting demand loss as a significant indicator of large-scale outages.
 
-### Outage Duration vs. Year
-
-To analyze trends over time, we looked at how outage durations have changed over the years.
-
-![Outage Duration vs. Year](outage_duration_vs_year.png)
-
-**Explanation**: The scatter plot suggests a slight negative trend in outage duration over the years, indicating improvements in outage management and infrastructure over time.
-
 These analyses provide a comprehensive understanding of the data and lay the groundwork for developing an early warning system for power outages.
 
 ---
