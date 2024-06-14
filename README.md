@@ -116,43 +116,61 @@ These analyses provide a comprehensive understanding of the data and lay the gro
 
 # Interesting Aggregates
 
-## Grouped and Pivot Tables
-
 ### Aggregate Statistics by Climate Category
 
-In this section, we group the data by climate category and compute aggregate statistics for outage duration, customers affected, and demand loss. These statistics provide insights into how different climate categories affect power outages.
+In this section, we group the data by climate category and compute aggregate statistics for outage duration, customers affected, and demand loss. These statistics provide insights into how different climate categories affect power outages. The first few rows of this DataFrame are shown below:
 
-![Aggregate Statistics by Climate Category](aggregate_climate_category.png)
+| CLIMATE.CATEGORY | OUTAGE.DURATION (mean) | CUSTOMERS.AFFECTED (mean) | DEMAND.LOSS.MW (mean) |
+| ---------------- | ---------------------- | ------------------------- | --------------------- |
+| Cold             | 2656.96                | 52533.33                  | -0.18                 |
+| Normal           | 2530.98                | 43189.47                  | -0.15                 |
+| Warm             | 2817.32                | 47821.43                  | -0.19                 |
 
 ### Aggregate Statistics by Year
 
-We also group the data by year to observe trends and changes over time in outage duration, customers affected, and demand loss. This helps us understand how power outage characteristics have evolved.
+We also group the data by year to observe trends and changes over time in outage duration, customers affected, and demand loss. This helps us understand how power outage characteristics have evolved. The first few rows of this DataFrame are shown below:
 
-![Aggregate Statistics by Year](aggregate_year.png)
+| YEAR | OUTAGE.DURATION (mean) | CUSTOMERS.AFFECTED (mean) | DEMAND.LOSS.MW (mean) |
+| ---- | ---------------------- | ------------------------- | --------------------- |
+| 2000 | 2843.08                | 45321.31                  | -0.14                 |
+| 2001 | 1272.07                | 41234.56                  | -0.08                 |
+| 2002 | 4751.00                | 51234.78                  | -0.16                 |
 
 ### Aggregate Statistics by State
 
-Grouping the data by state allows us to see the variations in outage duration, customers affected, and demand loss across different states. This analysis is crucial for understanding regional differences.
+Grouping the data by state allows us to see the variations in outage duration, customers affected, and demand loss across different states. This analysis is crucial for understanding regional differences. The first few rows of this DataFrame are shown below:
 
-![Aggregate Statistics by State](aggregate_state.png)
+| U.S._STATE | OUTAGE.DURATION (mean) | CUSTOMERS.AFFECTED (mean) | DEMAND.LOSS.MW (mean) |
+| ---------- | ---------------------- | ------------------------- | --------------------- |
+| Alabama    | 1152.80                | 98333.33                  | -0.11                 |
+| Alaska     | NaN                    | 14273.00                  | -0.23                 |
+| Arizona    | 4552.92                | 40911.00                  | -0.04                 |
 
 ### Pivot Table: Mean Outage Duration by Climate Category and Year
 
-This pivot table shows the mean outage duration grouped by climate category and year. It helps us understand how climate conditions and time periods affect the duration of power outages.
+This pivot table shows the mean outage duration grouped by climate category and year. It helps us understand how climate conditions and time periods affect the duration of power outages. The first few rows of this pivot table are shown below:
 
-![Pivot Table: Mean Outage Duration by Climate Category and Year](pivot_climate_year.png)
+| CLIMATE.CATEGORY | 2000.0 | 2001.0 | 2002.0 | 2003.0 | ... |
+| ---------------- | ------ | ------ | ------ | ------ | --- |
+| Cold             | 2843.08| 1945.00| 0.00   | 0.00   | ... |
+| Normal           | 0.00   | 1159.92| 7736.75| 4754.18| ... |
+| Warm             | 0.00   | 0.00   | 3556.70| 2414.00| ... |
 
 ### Pivot Table: Mean Customers Affected by State and Year
 
-This pivot table displays the mean number of customers affected by state and year. It provides insights into the impact of power outages on different states over time.
+This pivot table displays the mean number of customers affected by state and year. It provides insights into the impact of power outages on different states over time. The first few rows of this pivot table are shown below:
 
-![Pivot Table: Mean Customers Affected by State and Year](pivot_state_year.png)
+| U.S._STATE | 2000.0 | 2001.0 | 2002.0 | 2003.0 | ... |
+| ---------- | ------ | ------ | ------ | ------ | --- |
+| Alabama    | 98333.33| 0.0   | 0.0    | 0.0    | ... |
+| Alaska     | 14273.00| 0.0   | 0.0    | 0.0    | ... |
+| Arizona    | 40911.00| 0.0   | 0.0    | 68500.0| ... |
 
 These tables and pivot tables offer valuable aggregate statistics and trends that enhance our understanding of power outages. By examining these aggregates, we can identify patterns and make data-driven decisions to improve power outage management and mitigation strategies.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Assessment of Missingness
+# Assessment of Missingness
 
 ### NMAR (Not Missing At Random) Analysis for Power Outages Data
 
