@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the Power Outages Project! This website provides an overview of our project, aiming to make the findings accessible to a broad audience, including classmates, friends, family, recruiters, and random internet strangers. Here, we present the key elements of our analysis, focusing on understanding the leading indicators of power outages and exploring the potential to develop an early warning system. The dataset used for this project is the Power Outages dataset, which contains detailed information about various power outage events.
+Welcome to the Power Outages Project! This website provides an overview of our project, aiming to make the findings accessible to a broad audience, including classmates, friends, family, recruiters, and random internet strangers. This project focuses on understanding the leading indicators of power outages and exploring the potential to develop an early warning system. 
 
 ## Project Question
 
@@ -11,13 +11,12 @@ Welcome to the Power Outages Project! This website provides an overview of our p
 Developing an early warning system for power outages is crucial for several reasons:
 
 - **Preparedness and Response**: Helps utility companies and emergency services prepare for and respond more effectively to impending outages.
-- **Real-time Data Processing**: Demonstrates the ability to handle and analyze data in real-time, which is crucial for practical applications.
 - **Anomaly Detection**: Identifying rare and unusual events shows proficiency in anomaly detection, a valuable skill in machine learning.
 - **Practical Impact**: An early warning system has immediate practical applications, providing significant value to stakeholders by potentially preventing outages or mitigating their impact.
 
-By investigating this question and developing an early warning system, we aim to create a practical solution that can help mitigate the effects of power outages and improve the resilience of power infrastructure.
-
 ## Dataset Info
+
+The dataset used for this project is the Power Outages dataset, which contains detailed information about various power outage events. The dataset contains a total of 1540 rows and 57 columns, providing a comprehensive view of the factors involved in power outages. The following are the columns:
 
 - **OUTAGE.START**: The start time of the power outage.
 - **OUTAGE.END**: The end time of the power outage.
@@ -31,13 +30,9 @@ By investigating this question and developing an early warning system, we aim to
 - **TEMPERATURE**: Temperature at the time of the outage.
 - **PRECIPITATION**: Precipitation level at the time of the outage.
 
-The dataset contains a total of 1540 rows and 57 columns, providing a comprehensive view of the factors involved in power outages.
-
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Data Cleaning and Exploratory Data Analysis
-
-### Data Cleaning
 
 In our data cleaning process, we performed the following steps:
 
@@ -49,11 +44,7 @@ In our data cleaning process, we performed the following steps:
 6. **Date and Time Processing**: Combined date and time columns to create datetime columns for OUTAGE.START and OUTAGE.END.
 7. **Scaled Numerical Data**: Scaled numerical columns like demand loss and prices for analysis.
 
-These steps ensured the dataset was clean and ready for analysis. Below is the head of the cleaned DataFrame:
-
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
-
-### Uni/Bi-Variate Analysis
 
 ## Univariate Analysis
 
