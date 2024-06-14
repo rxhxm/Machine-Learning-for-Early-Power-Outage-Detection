@@ -8,8 +8,6 @@ Welcome to the Power Outages Project! This website provides an overview of our p
 
 **What are the leading indicators of power outages, and can we build an early warning system to detect potential outages?**
 
-## Importance of the Question
-
 Developing an early warning system for power outages is crucial for several reasons:
 
 - **Preparedness and Response**: Helps utility companies and emergency services prepare for and respond more effectively to impending outages.
