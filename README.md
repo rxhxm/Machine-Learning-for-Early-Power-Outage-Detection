@@ -39,7 +39,7 @@ By investigating this question and developing an early warning system, we aim to
 
 The dataset contains a total of 1540 rows and 57 columns, providing a comprehensive view of the factors involved in power outages.
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Data Cleaning and Exploratory Data Analysis
 
@@ -57,7 +57,7 @@ In our data cleaning process, we performed the following steps:
 
 These steps ensured the dataset was clean and ready for analysis. Below is the head of the cleaned DataFrame:
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Uni/Bi-Variate Analysis
 
@@ -166,7 +166,37 @@ This pivot table displays the mean number of customers affected by state and yea
 These tables and pivot tables offer valuable aggregate statistics and trends that enhance our understanding of power outages. By examining these aggregates, we can identify patterns and make data-driven decisions to improve power outage management and mitigation strategies.
 
 
----
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Hypothesis Testing
+
+### Hypothesis 1: Impact of Climate Category on Outage Duration
+
+Null Hypothesis (H0): There is no difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY.
+
+Alternative Hypothesis (H1): There is a difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY.
+
+Test Statistic: F-statistic from ANOVA test.
+
+Result: After performing ANOVA, we found a significant difference in the mean OUTAGE.DURATION between different CLIMATE.CATEGORY (p-value < 0.05).
+
+Conclusion: The analysis suggests that the climate category significantly impacts the duration of power outages.
+
+### Hypothesis 2: Temporal Trends in Power Outage Frequency
+
+Question: Has the frequency of power outages increased over the years?
+
+Null Hypothesis (H0): The frequency of power outages has remained constant over the years.
+
+Alternative Hypothesis (H1): The frequency of power outages has increased over the years.
+
+Test Statistic: Linear Regression Slope
+
+Result: After conducting a linear regression analysis, the slope of the regression line was found to be positive (slope: 8.125) with a p-value of 0.00657. Since the p-value is less than the significance level of 0.05, we reject the null hypothesis.
+
+Conclusion: The analysis indicates a significant upward trend in the frequency of power outages over time, suggesting that power outages have become more common in recent years.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Framing a Prediction Problem
 
