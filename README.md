@@ -227,7 +227,7 @@ These features are chosen based on their relevance and availability prior to the
 
 ---
 
-## Step 6: Baseline Model
+## Baseline Model
 
 ### Model 1: Predicting the Likelihood of Power Outages
 
@@ -235,8 +235,13 @@ These features are chosen based on their relevance and availability prior to the
 
 **Technique:** Supervised learning using logistic regression.
 
+**Features:**
+- YEAR (ordinal): Extracted from the OUTAGE.START column to account for changes over time.
+- CLIMATE.CATEGORY (nominal): Indicates the climate conditions that might influence power outages.
+- POPDEN_URBAN (quantitative): Represents the population density in urban areas, which could impact the likelihood of outages.
+- RES.PRICE (quantitative): Residential electricity price, which may correlate with infrastructure quality and outage frequency.
+
 **Data Preparation:**
-- Features: YEAR, CLIMATE.CATEGORY, POPDEN_URBAN, RES.PRICE
 - Target Variable: Binary (OUTAGE_OCCURRED)
 - Steps:
   1. Extract the year from the OUTAGE.START column.
@@ -258,77 +263,67 @@ These features are chosen based on their relevance and availability prior to the
 - Train the baseline model.
 - Evaluate the model using accuracy, ROC-AUC score, and a classification report.
 
-```python
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, accuracy_score, roc_auc_score
-from sklearn.utils import resample
+**Performance:**
+- Accuracy: 0.71
+- ROC-AUC Score: 0.75
+- Classification Report:
 
-# Load your dataset
-# Assuming df is your DataFrame
-df['YEAR'] = pd.to_datetime(df['OUTAGE.START']).dt.year
+          precision    recall  f1-score   support
 
-# Select relevant features and target
-features = ['YEAR', 'CLIMATE.CATEGORY', 'POPDEN_URBAN', 'RES.PRICE']
-df = df.dropna(subset=features + ['OUTAGE.DURATION'])
-df['OUTAGE_OCCURRED'] = df['OUTAGE.DURATION'].apply(lambda x: 1 if x > 0 else 0)  # Binary target variable
+       0       0.66      0.81      0.73       267
+       1       0.78      0.61      0.68       288
 
-# Balancing the dataset
-df_majority = df[df.OUTAGE_OCCURRED == 1]
-df_minority = df[df.OUTAGE_OCCURRED == 0]
+accuracy                           0.71       555
 
-df_minority_upsampled = resample(df_minority, 
-                                 replace=True,     # sample with replacement
-                                 n_samples=len(df_majority),    # to match majority class
-                                 random_state=42) # reproducible results
+**Summary:** The baseline model using logistic regression performs reasonably well with an accuracy of 0.71 and a ROC-AUC score of 0.75. This is a good starting point for further model enhancements.
 
-df_balanced = pd.concat([df_majority, df_minority_upsampled])
 
-X = df_balanced[features]
-y = df_balanced['OUTAGE_OCCURRED']
 
-# Define preprocessing for numerical and categorical features
-numerical_features = ['YEAR', 'POPDEN_URBAN', 'RES.PRICE']
-categorical_features = ['CLIMATE.CATEGORY']
 
-numerical_transformer = StandardScaler()
-categorical_transformer = OneHotEncoder(handle_unknown='ignore')
+### Model 2: Early Warning System for Power Outages
 
-# Create preprocessing pipelines
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', numerical_transformer, numerical_features),
-        ('cat', categorical_transformer, categorical_features)
-    ])
+**Objective:** Develop an early warning system to detect potential power outages.
 
-# Create the pipeline
-pipeline = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('classifier', LogisticRegression(random_state=42))
-])
+**Technique:** Supervised learning using a RandomForestClassifier.
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+**Features:**
+- YEAR (ordinal): Extracted from the OUTAGE.START column to account for changes over time.
+- CLIMATE.CATEGORY (nominal): Indicates the climate conditions that might influence power outages.
+- POPDEN_URBAN (quantitative): Represents the population density in urban areas, which could impact the likelihood of outages.
+- RES.PRICE (quantitative): Residential electricity price, which may correlate with infrastructure quality and outage frequency.
 
-# Train the baseline model
-pipeline.fit(X_train, y_train)
+**Data Preparation:**
+- Target Variable: Binary (OUTAGE_OCCURRED)
+- Steps:
+1. Extract the year from the OUTAGE.START column.
+2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
+3. Create a binary target variable (OUTAGE_OCCURRED).
 
-# Make predictions
-y_pred = pipeline.predict(X_test)
-y_pred_prob = pipeline.predict_proba(X_test)[:, 1]
+**Data Balancing:**
+- Upsample the minority class to balance the dataset.
 
-# Evaluate the model
-accuracy = accuracy_score(y_test, y_pred)
-roc_auc = roc_auc_score(y_test, y_pred_prob)
-report = classification_report(y_test, y_pred, zero_division=0)
+**Preprocessing:**
+- Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE).
+- One-hot encode categorical features (CLIMATE.CATEGORY).
 
-# Print evaluation results
-print("Baseline Model Evaluation:")
-print(f"Accuracy: {accuracy}")
-print(f"ROC-AUC Score: {roc_auc}")
-print("Classification Report:")
-print(report)
+**Pipeline Creation:**
+- Combine preprocessing steps and Random Forest Classifier into a single pipeline.
+
+**Model Training and Evaluation:**
+- Split the data into training and testing sets.
+- Train the model and evaluate using accuracy, ROC-AUC score, and a classification report.
+
+**Performance:**
+- Accuracy: 0.96
+- ROC-AUC Score: 0.98
+- Classification Report:
+
+          precision    recall  f1-score   support
+
+       0       0.93      1.00      0.96       267
+       1       1.00      0.93      0.96       288
+
+accuracy                           0.96       555
+
+
+**Summary:** The baseline model using a RandomForestClassifier for building an early warning system for power outages performs very well, with high accuracy, ROC-AUC score, and balanced precision, recall, and F1-scores. The model effectively predicts the likelihood of power outages using the selected features, making it a strong starting point for further enhancements and more complex models.
