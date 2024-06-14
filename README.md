@@ -159,6 +159,56 @@ This pivot table displays the mean number of customers affected by state and yea
 
 These tables and pivot tables offer valuable aggregate statistics and trends that enhance our understanding of power outages. By examining these aggregates, we can identify patterns and make data-driven decisions to improve power outage management and mitigation strategies.
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assessment of Missingness
+
+### NMAR (Not Missing At Random) Analysis for Power Outages Data
+
+When analyzing missing data, it's important to determine if the data are NMAR (Not Missing At Random). This requires reasoning about the data generating process, rather than just looking at the data. Here’s how we approach this for the power outages dataset:
+
+#### Understanding the Data Generating Process
+
+**Outage Duration (OUTAGE.DURATION):**
+- **Potential NMAR Reasoning:** Outage duration data could be NMAR if the data collection process itself is affected by the outage. For example, if longer outages lead to failures in data recording systems, the outage duration might not be recorded accurately. This would result in missing data that depends directly on the value of the outage duration itself.
+
+**Customers Affected (CUSTOMERS.AFFECTED):**
+- **Potential NMAR Reasoning:** Data on the number of customers affected could be NMAR if areas with a higher number of affected customers are more likely to experience issues in reporting due to the scale of the outage. For instance, if an outage impacts communication systems in heavily populated areas, it might hinder the accurate reporting of the number of affected customers.
+
+**Demand Loss (DEMAND.LOSS.MW):**
+- **Potential NMAR Reasoning:** Demand loss data could be NMAR if larger losses lead to situations where recording or reporting the data becomes more challenging. For example, in cases of significant demand loss, the priority might shift to restoring services rather than data recording, leading to missing values that correlate with higher demand loss.
+
+**Prices (RES.PRICE, COM.PRICE, IND.PRICE):**
+- **Potential NMAR Reasoning:** Pricing data might be NMAR if higher or lower prices lead to different reporting behaviors. For instance, higher residential or commercial prices might correlate with regions that have better infrastructure for data collection, while lower prices might be associated with regions where data collection is less rigorous.
+
+**Population Density (POPDEN_URBAN):**
+- **Potential NMAR Reasoning:** Population density data could be NMAR if regions with very high or very low population densities have different capacities for data reporting. For example, very densely populated urban areas might have more robust data reporting systems compared to sparsely populated rural areas, leading to differences in missing data patterns.
+
+**Conclusion:** To determine if the data in this dataset are NMAR, it's essential to consider the specific context and mechanisms that might influence data reporting and recording. Simply analyzing the data for patterns of missingness won't be sufficient; we need to understand the real-world processes that lead to these data points being recorded or not recorded.
+
+### Missingness Dependency
+
+To test missingness dependency, I will focus on the distribution of DEMAND.LOSS.MW. I will test this against the columns CUSTOMERS.AFFECTED and YEAR.
+
+#### CUSTOMERS.AFFECTED
+
+First, I examine the distribution of CUSTOMERS.AFFECTED when DEMAND.LOSS.MW is missing vs not missing.
+
+- **Null Hypothesis:** The distribution of CUSTOMERS.AFFECTED is the same when DEMAND.LOSS.MW is missing vs not missing.
+- **Alternate Hypothesis:** The distribution of CUSTOMERS.AFFECTED is different when DEMAND.LOSS.MW is missing vs not missing.
+
+I found an observed difference of 0.0 with a p-value of 1.0. At this value, I fail to reject the null hypothesis, indicating that the missingness of DEMAND.LOSS.MW is likely independent of CUSTOMERS.AFFECTED.
+
+#### YEAR
+
+Next, I examined the dependency of DEMAND.LOSS.MW missing on the YEAR column.
+
+- **Null Hypothesis:** The distribution of YEAR is the same when DEMAND.LOSS.MW is missing vs not missing.
+- **Alternate Hypothesis:** The distribution of YEAR is different when DEMAND.LOSS.MW is missing vs not missing.
+
+I found an observed difference of -0.241 with a p-value of 0.001. The empirical distribution of the differences is shown below. At this value, I reject the null hypothesis, indicating that the missingness of DEMAND.LOSS.MW is dependent on YEAR.
+
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
