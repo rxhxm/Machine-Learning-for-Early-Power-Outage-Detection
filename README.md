@@ -327,3 +327,146 @@ accuracy                           0.96       555
 
 
 **Summary:** The baseline model using a RandomForestClassifier for building an early warning system for power outages performs very well, with high accuracy, ROC-AUC score, and balanced precision, recall, and F1-scores. The model effectively predicts the likelihood of power outages using the selected features, making it a strong starting point for further enhancements and more complex models.
+
+
+---
+
+
+## Final Model
+
+### Model 1: Predicting the Likelihood of Power Outages
+
+**Objective:** Predict whether a power outage will occur within a given timeframe.
+
+**Technique:** Supervised learning using logistic regression.
+
+**Features:**
+- YEAR (ordinal): Extracted from the OUTAGE.START column to account for changes over time.
+- CLIMATE.CATEGORY (nominal): Indicates the climate conditions that might influence power outages.
+- POPDEN_URBAN (quantitative): Represents the population density in urban areas, which could impact the likelihood of outages.
+- RES.PRICE (quantitative): Residential electricity price, which may correlate with infrastructure quality and outage frequency.
+- YEAR_POPDEN_INTERACTION (quantitative): Interaction term to capture the effect of year and population density combined.
+- LOG_RES_PRICE (quantitative): Log-transformed residential price to handle potential skewness.
+
+**Feature Engineering:**
+- Created interaction term YEAR * POPDEN_URBAN to capture any interaction effect between the year and population density.
+- Applied a log transformation to RES.PRICE to handle any potential skewness in price distribution.
+
+**Hyperparameter Tuning:**
+- Used GridSearchCV to tune the following hyperparameters for the Logistic Regression model:
+  - C: Inverse of regularization strength.
+  - Penalty: Specify the norm used in penalization (l1, l2).
+
+**Best Hyperparameters:**
+- C: 100
+- Penalty: l1
+- Solver: liblinear
+
+**Data Preparation:**
+- Target Variable: Binary (OUTAGE_OCCURRED)
+- Steps:
+  1. Extract the year from the OUTAGE.START column.
+  2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
+  3. Create a binary target variable (OUTAGE_OCCURRED).
+
+**Data Balancing:**
+- Upsample the minority class to balance the dataset.
+
+**Preprocessing:**
+- Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE, YEAR_POPDEN_INTERACTION, LOG_RES_PRICE).
+- One-hot encode categorical features (CLIMATE.CATEGORY).
+
+**Pipeline Creation:**
+- Combine preprocessing steps and logistic regression into a single pipeline.
+
+**Model Training and Evaluation:**
+- Split the data into training and testing sets.
+- Train the model with best hyperparameters.
+- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
+
+**Performance:**
+- Accuracy: 0.71
+- ROC-AUC Score: 0.75
+- Classification Report:
+
+          precision    recall  f1-score   support
+
+       0       0.66      0.84      0.74       267
+       1       0.80      0.60      0.68       288
+
+accuracy                           0.71       555
+
+
+**Summary:** The final model using logistic regression with engineered features performs better than the baseline model with an accuracy of 0.71 and a ROC-AUC score of 0.75.
+
+
+
+### Model 2: Early Warning System for Power Outages
+
+**Objective:** Develop an early warning system to detect potential power outages.
+
+**Technique:** Supervised learning using a RandomForestClassifier.
+
+**Features:**
+- YEAR (ordinal): Extracted from the OUTAGE.START column to account for changes over time.
+- CLIMATE.CATEGORY (nominal): Indicates the climate conditions that might influence power outages.
+- POPDEN_URBAN (quantitative): Represents the population density in urban areas, which could impact the likelihood of outages.
+- RES.PRICE (quantitative): Residential electricity price, which may correlate with infrastructure quality and outage frequency.
+- YEAR_POPDEN_INTERACTION (quantitative): Interaction term to capture the effect of year and population density combined.
+- LOG_RES_PRICE (quantitative): Log-transformed residential price to handle potential skewness.
+
+**Feature Engineering:**
+- Created interaction term YEAR * POPDEN_URBAN to capture any interaction effect between the year and population density.
+- Applied a log transformation to RES.PRICE to handle potential skewness in price distribution.
+
+**Hyperparameter Tuning:**
+- Used GridSearchCV to tune the following hyperparameters for the RandomForestClassifier:
+- n_estimators: Number of trees in the forest.
+- max_depth: Maximum depth of the tree.
+- min_samples_split: Minimum number of samples required to split an internal node.
+- min_samples_leaf: Minimum number of samples required to be at a leaf node.
+
+**Best Hyperparameters:**
+- n_estimators: 200
+- max_depth: 10
+- min_samples_split: 2
+- min_samples_leaf: 1
+
+**Data Preparation:**
+- Target Variable: Binary (OUTAGE_OCCURRED)
+- Steps:
+1. Extract the year from the OUTAGE.START column.
+2. Drop rows with missing values in the selected features and target (OUTAGE.DURATION).
+3. Create a binary target variable (OUTAGE_OCCURRED).
+
+**Data Balancing:**
+- Upsample the minority class to balance the dataset.
+
+**Preprocessing:**
+- Standardize numerical features (YEAR, POPDEN_URBAN, RES.PRICE, YEAR_POPDEN_INTERACTION, LOG_RES_PRICE).
+- One-hot encode categorical features (CLIMATE.CATEGORY).
+
+**Pipeline Creation:**
+- Combine preprocessing steps and Random Forest Classifier into a single pipeline.
+
+**Model Training and Evaluation:**
+- Split the data into training and testing sets.
+- Train the model with best hyperparameters.
+- Evaluate the model using accuracy, ROC-AUC score, and a classification report.
+
+**Performance:**
+- Accuracy: 0.93
+- ROC-AUC Score: 0.98
+- Classification Report:
+
+-           precision    recall  f1-score   support
+
+       0       0.87      1.00      0.93       267
+       1       1.00      0.86      0.92       288
+
+accuracy                           0.93       555
+
+
+
+**Summary:** The final model using a RandomForestClassifier for building an early warning system for power outages performs excellently, with high accuracy, ROC-AUC score, and balanced precision, recall, and F1-scores. The model effectively predicts the likelihood of power outages using the selected features, making it a significant improvement over the baseline model.
+
